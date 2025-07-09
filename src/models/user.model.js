@@ -53,8 +53,17 @@ const User = sequelize.define(
   {
     tableName: "users",
     timestamps: true,
+    instanceMethods: {
+      validPassword: (password) => {
+        return bcrypt.compare(password, this.password);
+      },
+    },
   }
 );
+
+User.prototype.validPassword = async (password, hash) => {
+  return bcrypt.compareSync(password, hash);
+};
 
 User.beforeCreate(async (user, options) => {
   if (user.changed("password")) {
@@ -66,6 +75,10 @@ User.beforeUpdate(async (user, options) => {
     user.password = await bcrypt.hash(user.password, 12);
   }
 });
+
+User.comparePassword = (user) => {
+  return bcrypt.compare(password, user.password);
+};
 sequelize
   .sync({ alter: false })
   .then(() => {
