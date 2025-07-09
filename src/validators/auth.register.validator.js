@@ -20,6 +20,7 @@ const registerValidator = Joi.object({
     .min(5)
     .max(10)
     .optional(),
+  refreshToken: Joi.string().min(5).optional(),
 });
 
 module.exports = registerValidator;

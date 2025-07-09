@@ -35,6 +35,10 @@ const User = sequelize.define(
         },
       },
     },
+    refreshToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     role: {
       type: DataTypes.ENUM("USER", "ADMIN"),
       defaultValue: "USER",
