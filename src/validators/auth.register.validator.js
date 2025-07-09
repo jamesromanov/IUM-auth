@@ -24,11 +24,7 @@ const registerValidator = Joi.object({
 });
 
 const loginValidator = Joi.object({
-  email: Joi.string()
-    .required()
-    .min(6)
-    .max(40)
-    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
+  email: Joi.string().required().min(6).max(40).email(),
   password: Joi.string()
     .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
     .min(8)

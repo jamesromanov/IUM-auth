@@ -1,7 +1,10 @@
 const { response } = require("../utils/response");
 const errorHandler = require("../utils/error.handler");
-const { registerUser } = require("../services/auth.service");
-const { registerValidator } = require("../validators/auth.register.validator");
+const { registerUser, loginUser } = require("../services/auth.service");
+const {
+  registerValidator,
+  loginValidator,
+} = require("../validators/auth.register.validator");
 
 const register = errorHandler(async (req, res, next) => {
   const body = req.body;
@@ -13,6 +16,10 @@ const register = errorHandler(async (req, res, next) => {
 
 const login = errorHandler(async (req, res, next) => {
   const body = req.body;
+  const { error, value } = loginValidator.validate(body);
+  if (error) return response(res, error.details[0].message, 400);
+  const user = await loginUser(body);
+  response(res, user);
 });
 
-module.exports = { register };
+module.exports = { register, login };
