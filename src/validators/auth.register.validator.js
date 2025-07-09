@@ -23,4 +23,16 @@ const registerValidator = Joi.object({
   refreshToken: Joi.string().min(5).optional(),
 });
 
-module.exports = registerValidator;
+const loginValidator = Joi.object({
+  email: Joi.string()
+    .required()
+    .min(6)
+    .max(40)
+    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
+  password: Joi.string()
+    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+    .min(8)
+    .max(30)
+    .required(),
+});
+module.exports = { registerValidator, loginValidator };
