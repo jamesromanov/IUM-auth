@@ -1,18 +1,22 @@
 const Joi = require("joi");
 
-const registerValidator = Joi.isSchema({
+const registerValidator = Joi.object({
   name: Joi.string().min(4).max(40),
-  email: Joi.string().email().min(5).mex(40).required(),
+  email: Joi.string().email().min(5).max(40).required(),
   password: Joi.string()
-    .regex(
-      /(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[$@$!#.])[A-Za-zd$@$!%*?&.]{8,20}/
-    )
-    .min(1)
+    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+    .min(8)
     .max(30)
     .required(),
-  role: Joi.string().valid("USER", "ADMIN").min(4).max(6).optional(),
+  role: Joi.string()
+    .valid("USER", "ADMIN")
+    .default("USER")
+    .min(4)
+    .max(6)
+    .optional(),
   status: Joi.string()
     .valid("INACTIVE", "ACTIVE", "DELETED")
+    .default("INACTIVE")
     .min(5)
     .max(10)
     .optional(),
