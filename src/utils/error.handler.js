@@ -1,9 +1,10 @@
+const { response } = require("./response");
 const errorHandler = (func) => {
   return (req, res, next) => {
     func(req, res, next).catch((err) => {
-      res.status(500).json({ status: "Faliled", message: err.message });
+      console.log(err);
+      response(res, err?.parent?.detail || err.message, 500);
     });
-    next();
   };
 };
 

@@ -1,9 +1,10 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../config/db";
-import { READONLY } from "sqlite3";
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../config/db");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const User = sequelize.define(
-  "User",
+  "users",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -54,3 +55,21 @@ const User = sequelize.define(
     timestamps: true,
   }
 );
+
+User.beforeCreate(async (user, options) => {
+  if (user.changed("password")) {
+    user.password = await bcrypt.hash(user.password, 12);
+  }
+});
+User.beforeUpdate(async (user, options) => {
+  if (user.changed("password")) {
+    user.password = await bcrypt.hash(user.password, 12);
+  }
+});
+sequelize
+  .sync({ alter: false })
+  .then(() => {
+    console.log("Table created successfully!");
+  })
+  .catch((err) => console.log("Error while creeting table:", err));
+module.exports = User;
