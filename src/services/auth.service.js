@@ -1,6 +1,7 @@
 const { response } = require("../middlewares/app");
 const User = require("../models/user.model");
 const errorHandler = require("../utils/error.handler");
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (data) => {
   const userExists = await User.findOne({ where: { email: data.email } });
@@ -24,6 +25,14 @@ const loginUser = async (data) => {
     id: userExists.id,
     role: userExists.role,
   };
+
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_KEY, {
+    expiresIn: process.env.REFRESH_TOKEN_EXP,
+  });
+
+  userExists.refreshToken = refreshToken;
+  await userExists.save({ hooks: true });
+  return "Succesfully ";
 };
 
 module.exports = { registerUser, loginUser };
