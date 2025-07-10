@@ -25,7 +25,7 @@ npm run start
 ## Additional
 run the project bu docker by the following command:
 ```bash
-docker compose up
+docker compose up -d
 ```
 then simply open the 
 ```bash
