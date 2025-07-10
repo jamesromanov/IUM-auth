@@ -1,3 +1,4 @@
+const { sendMail } = require("../common/otp");
 const { response } = require("../middlewares/app");
 const User = require("../models/user.model");
 const errorHandler = require("../utils/error.handler");
@@ -6,11 +7,13 @@ const jwt = require("jsonwebtoken");
 const registerUser = async (data) => {
   const userExists = await User.findOne({ where: { email: data.email } });
   if (userExists) throw new Error("User already registered");
-  const userCraeted = (await User.create(data)).toJSON();
-  delete userCraeted.refreshToken;
-  delete userCraeted.password;
-  delete userCraeted.role;
-  return userCraeted;
+
+  return sendMail(data.email, "hello");
+  // const userCraeted = (await User.create(data)).toJSON();
+  // delete userCraeted.refreshToken;
+  // delete userCraeted.password;
+  // delete userCraeted.role;
+  // return userCraeted;
 };
 
 const loginUser = async (data) => {
