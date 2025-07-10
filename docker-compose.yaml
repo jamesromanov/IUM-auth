@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DATABASE: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: db
+    ports:
+      - 5439:5432
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${DB_HOST}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USERNAME: ${DB_USERNAME}
+      PORT: ${PORT}
+      REFRESH_TOKEN_EXP: ${REFRESH_TOKEN_EXP}
+      CODE_EXP: ${CODE_EXP}
+      CODE_SECRET: ${CODE_SECRET}
+      REFRESH_TOKEN_KEY: ${REFRESH_TOKEN_KEY}
+      ACCESS_TOKEN_EXP: ${ACCESS_TOKEN_EXP}
+      ACCESS_TOKEN_KEY: ${ACCESS_TOKEN_KEY}
+      USER_MAIL: ${USER_MAIL}
+      USER_PASS: ${USER_PASS}
+      COOKIE_EXP: ${COOKIE_EXP}
+    depends_on:
+      - db

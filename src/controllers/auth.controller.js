@@ -47,7 +47,6 @@ const login = errorHandler(async (req, res, next) => {
 
 const logout = errorHandler(async (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token);
   if (!token) throw new Error("Token is invalid");
 
   const logoutData = await logoutUser(token);
@@ -55,7 +54,7 @@ const logout = errorHandler(async (req, res, next) => {
     maxAge: eval(process.env.COOKIE_EXP),
     secure: false,
   };
-  res.clearCookie("jwt", options);
+  res.clearCookie("token", options);
   response(res, logoutData, 201);
 });
 

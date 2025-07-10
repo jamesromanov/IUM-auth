@@ -21,7 +21,6 @@ const registerUser = async (data) => {
 
 const activateAccount = async (data) => {
   const { email, code } = data;
-  console.log(code);
   const userExists = await User.findOne({ where: { email } });
   const emailExists = await Otp.findOne({ where: { email } });
   if (!userExists || !emailExists) throw new Error("Email is invalid");
@@ -67,7 +66,6 @@ const logoutUser = async (token) => {
   const verifyToken = await jwt.verify(token, process.env.REFRESH_TOKEN_KEY);
 
   const userExists = await User.findOne({ where: { refreshToken: token } });
-  console.log(verifyToken, userExists);
   if (!userExists || verifyToken.id !== userExists.id)
     throw new Error("Token is invalid");
 

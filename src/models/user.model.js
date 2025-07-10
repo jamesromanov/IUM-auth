@@ -84,7 +84,7 @@ User.comparePassword = (user) => {
   return bcrypt.compare(password, user.password);
 };
 sequelize
-  .sync({ alter: false })
+  .sync({ alter: true })
   .then(() => {
     console.log("Table created successfully!");
   })

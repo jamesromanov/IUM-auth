@@ -49,12 +49,7 @@ Otp.prototype.validCode = (code, hash) => {
   return jwt.verify(hash, code);
 };
 
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log("Table created successfully!");
-  })
-  .catch((err) => console.log("Error while creeting table:", err));
+(err) => console.log("Error while creeting table:", err);
 
 Otp.beforeCreate(async (data, options) => {
   if (data.changed("code")) {
@@ -70,5 +65,9 @@ Otp.beforeUpdate(async (data, options) => {
     });
   }
 });
+
+sequelize.sync({ alter: true }).then(() => {
+  console.log("Table created successfully!");
+}).catch;
 
 module.exports = Otp;
