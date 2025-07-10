@@ -47,6 +47,24 @@ const swaggerSpec = swaggerJsDoc({
             role: "USER",
           },
         },
+        UserActivate: {
+          type: "object",
+          require: ["email", "code"],
+          properties: {
+            email: {
+              type: "string",
+              description: "User email",
+            },
+            code: {
+              type: "string",
+              description: "User email verification code",
+            },
+          },
+          example: {
+            email: "someone@gmail.com",
+            code: "XXXXX",
+          },
+        },
         UserLogin: {
           type: "object",
           required: ["email", "password"],
@@ -59,10 +77,10 @@ const swaggerSpec = swaggerJsDoc({
               type: "string",
               description: "User password",
             },
-            exmaple: {
-              email: "exmaple@gmail.com",
-              password: "strongPassword1@#",
-            },
+          },
+          example: {
+            email: "exmaple@gmail.com",
+            password: "strongPassword1@#",
           },
         },
       },

@@ -17,7 +17,7 @@ const sendMail = (userMail, message) => {
     const mailOptions = {
       from: process.env.USER_MAIL,
       to: userMail,
-      subject: "OTP manager verifier",
+      subject: "Verification code:",
       text: message,
       name: "JAMSHID",
     };

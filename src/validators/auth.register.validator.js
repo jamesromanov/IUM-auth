@@ -31,4 +31,9 @@ const loginValidator = Joi.object({
     .max(30)
     .required(),
 });
-module.exports = { registerValidator, loginValidator };
+
+const activateValidator = Joi.object({
+  code: Joi.string().required().min(5).max(5),
+  email: Joi.string().required().min(6).max(40).email(),
+});
+module.exports = { registerValidator, loginValidator, activateValidator };
